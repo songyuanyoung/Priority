@@ -22,4 +22,16 @@ public class AppExecutors {
     public AppExecutors() {
         this(new DiskIOThreadExecutor(), Executors.newFixedThreadPool(THREAD_COUNT), new MainThreadExecutor());
     }
+
+    public Executor getDiskIO() {
+        return diskIO;
+    }
+
+    public Executor getNetworkIO() {
+        return networkIO;
+    }
+
+    public Executor getMainThread() {
+        return mainThread;
+    }
 }

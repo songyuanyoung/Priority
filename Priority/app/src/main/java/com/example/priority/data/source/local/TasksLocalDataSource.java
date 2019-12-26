@@ -2,11 +2,15 @@ package com.example.priority.data.source.local;
 
 import android.widget.ImageView;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import androidx.annotation.NonNull;
 
 import com.example.priority.data.Task;
 import com.example.priority.data.TasksDataSource;
 import com.example.priority.utils.AppExecutors;
+
+import java.util.List;
 
 public class TasksLocalDataSource implements TasksDataSource {
 
@@ -33,7 +37,24 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void getTasks(@NonNull LoadTasksCallback callback) {
+    public void getTasks(@NonNull final LoadTasksCallback callback) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                final List<Task> tasks = mTasksDao.getTasks();
+                mAppExecutors.getMainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (tasks.isEmpty()) {
+                            callback.onDataNotAvailable();
+                        } else {
+                            callback.onTasksLoaded(tasks);
+                        }
+                    }
+                });
+            }
+        };
+        mAppExecutors.getDiskIO().execute(runnable);
 
     }
 
@@ -43,7 +64,15 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void saveTask(@NonNull Task task) {
+    public void saveTask(@NonNull final Task task) {
+        checkNotNull(task);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mTasksDao.insertTask(task);
+            }
+        };
+        mAppExecutors.getDiskIO().execute(runnable);
 
     }
 

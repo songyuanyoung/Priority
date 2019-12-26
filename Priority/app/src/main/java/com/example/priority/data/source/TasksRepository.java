@@ -5,13 +5,21 @@ import androidx.annotation.NonNull;
 import com.example.priority.data.Task;
 import com.example.priority.data.TasksDataSource;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TasksRepository implements TasksDataSource {
 
     private static TasksRepository INSTANCE;
 
     private final TasksDataSource mTasksRemoteDataSource;
+
+
+    Map<String, Task> mCachedTasks;
 
     private final TasksDataSource mTasksLocalDataSource;
 
@@ -32,7 +40,7 @@ public class TasksRepository implements TasksDataSource {
 
     @Override
     public void getTasks(@NonNull final LoadTasksCallback callback) {
-        mTasksRemoteDataSource.getTasks(new LoadTasksCallback() {
+        mTasksLocalDataSource.getTasks(new LoadTasksCallback() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
                 callback.onTasksLoaded(tasks);
@@ -52,7 +60,15 @@ public class TasksRepository implements TasksDataSource {
 
     @Override
     public void saveTask(@NonNull Task task) {
+        checkNotNull(task);
+        mTasksRemoteDataSource.saveTask(task);
+        mTasksLocalDataSource.saveTask(task);
 
+        if (mCachedTasks == null) {
+            mCachedTasks = new LinkedHashMap<>();
+        }
+
+        mCachedTasks.put(task.getId(), task);
     }
 
     @Override
