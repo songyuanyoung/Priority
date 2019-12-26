@@ -1,5 +1,6 @@
 package com.example.priority.tasks;
 
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -82,6 +83,7 @@ public class TasksPresenter implements TasksContract.Presenter {
 
     @Override
     public void openTaskDetails(@NonNull Task requestedTask) {
+        mTasksView.showTaskDetailsUi(requestedTask.getId());
 
     }
 

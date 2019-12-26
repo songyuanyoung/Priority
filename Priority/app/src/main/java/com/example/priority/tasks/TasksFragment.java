@@ -13,7 +13,9 @@ import android.widget.ListView;
 
 import com.example.priority.R;
 import com.example.priority.addedittask.AddEditTaskActivity;
+import com.example.priority.addedittask.AddEditTaskFragment;
 import com.example.priority.data.Task;
+import com.example.priority.taskdetails.TaskDetailsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -121,7 +123,9 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void showTaskDetailsUi(String taskId) {
-
+        Intent intent = new Intent(getActivity(), TaskDetailsActivity.class);
+        intent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
+        startActivityForResult(intent, AddEditTaskActivity.REQUEST_ADD_TASK);
     }
 
     @Override

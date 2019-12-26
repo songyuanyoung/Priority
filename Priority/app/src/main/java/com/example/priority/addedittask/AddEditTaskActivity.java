@@ -39,6 +39,13 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
         if (addEditTaskFragment == null) {
             addEditTaskFragment = AddEditTaskFragment.newInstance();
+
+            if (taskId != null) {
+                Bundle bundle = new Bundle();
+                bundle.putString(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
+                addEditTaskFragment.setArguments(bundle);
+            }
+
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), addEditTaskFragment, R.id.contentFrame);
         }
 
