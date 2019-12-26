@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.example.priority.addedittask.AddEditTaskActivity;
 import com.example.priority.addedittask.AddEditTaskFragment;
 import com.example.priority.data.Task;
 import com.example.priority.taskdetails.TaskDetailsActivity;
+import com.example.priority.taskdetails.TaskDetailsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -34,6 +36,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * create an instance of this fragment.
  */
 public class TasksFragment extends Fragment implements TasksContract.View {
+
+    private final static String TAG = TasksFragment.class.getSimpleName();
 
     private TasksAdapter mListAdapter;
 
@@ -123,9 +127,10 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void showTaskDetailsUi(String taskId) {
+        Log.d(TAG, "taskId:" + taskId);
         Intent intent = new Intent(getActivity(), TaskDetailsActivity.class);
-        intent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
-        startActivityForResult(intent, AddEditTaskActivity.REQUEST_ADD_TASK);
+        intent.putExtra(TaskDetailsActivity.EXTRA_TASK_ID, taskId);
+        startActivity(intent);
     }
 
     @Override

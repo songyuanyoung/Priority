@@ -59,8 +59,24 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback) {
-
+    public void getTask(@NonNull final String taskId, @NonNull final GetTaskCallback callback) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                final Task task = mTasksDao.getTask(taskId);
+                mAppExecutors.getMainThread().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (task == null) {
+                            callback.onTaskNotAvailable();
+                        } else {
+                            callback.onTaskLoaded(task);
+                        }
+                    }
+                });
+            }
+        };
+        mAppExecutors.getDiskIO().execute(runnable);
     }
 
     @Override

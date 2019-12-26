@@ -31,6 +31,7 @@
     <string name="description_hint">Enter your TO-DO here.</string>
     <string name="add_task">New TO-DO</string>
     <string name="edit_task">Edit TO-DO</string>
+    <string name="menu_delete_task">Delete task</string>
 
 
 </resources>

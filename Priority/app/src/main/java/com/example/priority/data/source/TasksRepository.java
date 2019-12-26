@@ -54,8 +54,19 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void getTask(@NonNull String taskId, @NonNull GetTaskCallback callback) {
+    public void getTask(@NonNull String taskId, @NonNull final GetTaskCallback callback) {
 
+        mTasksLocalDataSource.getTask(taskId, new GetTaskCallback() {
+            @Override
+            public void onTaskLoaded(Task task) {
+                callback.onTaskLoaded(task);
+            }
+
+            @Override
+            public void onTaskNotAvailable() {
+                callback.onTaskNotAvailable();
+            }
+        });
     }
 
     @Override
