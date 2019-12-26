@@ -1,6 +1,7 @@
 package com.example.priority.tasks;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.priority.R;
+import com.example.priority.addedittask.AddEditTaskActivity;
 import com.example.priority.data.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -62,6 +65,16 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         ListView listView = root.findViewById(R.id.tasks_list);
         listView.setAdapter(mListAdapter);
 
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
+
+        fab.setImageResource(R.drawable.ic_add);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTasksPresenter.addNewTask();
+            }
+        });
+
 
         return root;
     }
@@ -102,7 +115,8 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void showAddTask() {
-
+        Intent intent = new Intent(getActivity(), AddEditTaskActivity.class);
+        startActivityForResult(intent, AddEditTaskActivity.REQUEST_ADD_TASK);
     }
 
     @Override

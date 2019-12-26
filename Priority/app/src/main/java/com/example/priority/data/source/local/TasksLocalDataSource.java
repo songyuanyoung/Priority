@@ -6,15 +6,28 @@ import androidx.annotation.NonNull;
 
 import com.example.priority.data.Task;
 import com.example.priority.data.TasksDataSource;
+import com.example.priority.utils.AppExecutors;
 
 public class TasksLocalDataSource implements TasksDataSource {
 
-    private static TasksLocalDataSource INSTANCE;
+    private static volatile TasksLocalDataSource INSTANCE;
 
-    public static TasksLocalDataSource getINSTANCE() {
+    private AppExecutors mAppExecutors;
+
+    private TasksDao mTasksDao;
+
+    public TasksLocalDataSource(AppExecutors appExecutors, TasksDao tasksDao) {
+        mAppExecutors = appExecutors;
+        mTasksDao = tasksDao;
+    }
+
+    public static TasksLocalDataSource getInstance(@NonNull AppExecutors appExecutors, @NonNull TasksDao tasksDao) {
 
         if (INSTANCE == null) {
-            INSTANCE = new TasksLocalDataSource();
+            synchronized (TasksLocalDataSource.class) {
+                INSTANCE = new TasksLocalDataSource(appExecutors, tasksDao);
+
+            }
         }
         return INSTANCE;
     }

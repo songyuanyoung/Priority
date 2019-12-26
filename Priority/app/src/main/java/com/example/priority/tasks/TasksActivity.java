@@ -59,9 +59,8 @@ public class TasksActivity extends AppCompatActivity {
             tasksFragment = TasksFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), tasksFragment, R.id.contentFrame);
         }
-        Log.d(TasksActivity.class.getSimpleName(), "Test:" );
 
-        mTasksPresenter = new TasksPresenter(Injection.provideTasksRepository(), tasksFragment);
+        mTasksPresenter = new TasksPresenter(Injection.provideTasksRepository(getApplicationContext()), tasksFragment);
 
     }
 
