@@ -9,16 +9,29 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 
+import com.example.priority.Injection;
 import com.example.priority.R;
+import com.example.priority.data.Task;
+import com.example.priority.data.TasksDataSource;
 import com.example.priority.statistics.StatisticsActivity;
+import com.example.priority.utils.ActivityUtils;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+
+import timber.log.Timber;
 
 public class TasksActivity extends AppCompatActivity {
 
+    String TAG = TasksActivity.class.getSimpleName();
+
     private DrawerLayout mDrawerLayout;
+
+    private TasksContract.Presenter mTasksPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +52,17 @@ public class TasksActivity extends AppCompatActivity {
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
+
+        TasksFragment tasksFragment = (TasksFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+
+        if (tasksFragment == null) {
+            tasksFragment = TasksFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), tasksFragment, R.id.contentFrame);
+        }
+        Log.d(TasksActivity.class.getSimpleName(), "Test:" );
+
+        mTasksPresenter = new TasksPresenter(Injection.provideTasksRepository(), tasksFragment);
+
     }
 
     @Override

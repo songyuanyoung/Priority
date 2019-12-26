@@ -1,11 +1,24 @@
 package com.example.priority.data.source.local;
 
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 
 import com.example.priority.data.Task;
 import com.example.priority.data.TasksDataSource;
 
 public class TasksLocalDataSource implements TasksDataSource {
+
+    private static TasksLocalDataSource INSTANCE;
+
+    public static TasksLocalDataSource getINSTANCE() {
+
+        if (INSTANCE == null) {
+            INSTANCE = new TasksLocalDataSource();
+        }
+        return INSTANCE;
+    }
+
     @Override
     public void getTasks(@NonNull LoadTasksCallback callback) {
 
