@@ -3,28 +3,23 @@ package com.example.priority.tasks;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.fragment.app.Fragment;
+
 import com.example.priority.R;
 import com.example.priority.addedittask.AddEditTaskActivity;
-import com.example.priority.addedittask.AddEditTaskFragment;
 import com.example.priority.data.Task;
 import com.example.priority.taskdetails.TaskDetailsActivity;
-import com.example.priority.taskdetails.TaskDetailsFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

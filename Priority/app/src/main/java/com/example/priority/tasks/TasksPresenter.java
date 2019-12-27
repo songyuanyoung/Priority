@@ -1,11 +1,9 @@
 package com.example.priority.tasks;
 
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.priority.BasePresenter;
 import com.example.priority.data.Task;
 import com.example.priority.data.TasksDataSource;
 import com.example.priority.data.source.TasksRepository;
@@ -68,7 +66,7 @@ public class TasksPresenter implements TasksContract.Presenter {
 
     private void processTasks(List<Task> tasks) {
         if (tasks.isEmpty()) {
-
+            mTasksView.showNoTasks();
         } else {
 
             Log.d(TAG, tasks.size() + ":size");

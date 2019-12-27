@@ -6,6 +6,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import androidx.annotation.NonNull;
 
+import com.example.priority.R;
 import com.example.priority.data.Task;
 import com.example.priority.data.TasksDataSource;
 import com.example.priority.utils.AppExecutors;
@@ -93,23 +94,53 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void completeTask(@NonNull Task task) {
+    public void completeTask(@NonNull final Task task) {
+        checkNotNull(task);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mTasksDao.updateCompleted(task.getId(), true);
+            }
+        };
 
+        mAppExecutors.getDiskIO().execute(runnable);
     }
 
     @Override
-    public void completeTask(@NonNull String taskId) {
+    public void completeTask(@NonNull final String taskId) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mTasksDao.updateCompleted(taskId, true);
+            }
+        };
 
+        mAppExecutors.getDiskIO().execute(runnable);
     }
 
     @Override
-    public void activateTask(@NonNull Task task) {
+    public void activateTask(@NonNull final Task task) {
+        checkNotNull(task);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mTasksDao.updateCompleted(task.getId(), false);
+            }
+        };
 
+        mAppExecutors.getDiskIO().execute(runnable);
     }
 
     @Override
-    public void activateTask(@NonNull String taskId) {
+    public void activateTask(@NonNull final String taskId) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mTasksDao.updateCompleted(taskId, false);
+            }
+        };
 
+        mAppExecutors.getDiskIO().execute(runnable);
     }
 
     @Override
@@ -128,7 +159,13 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void deleteTask(@NonNull String taskId) {
-
+    public void deleteTask(@NonNull final String taskId) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mTasksDao.deleteTaskById(taskId);
+            }
+        };
+        mAppExecutors.getDiskIO().execute(runnable);
     }
 }

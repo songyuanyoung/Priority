@@ -13,6 +13,8 @@ import com.example.priority.utils.ActivityUtils;
 
 public class AddEditTaskActivity extends AppCompatActivity {
 
+    private static final String TAG = AddEditTaskActivity.class.getSimpleName();
+
     public static final int REQUEST_ADD_TASK = 1;
 
     private ActionBar mActionBar;
@@ -35,6 +37,8 @@ public class AddEditTaskActivity extends AppCompatActivity {
 
 
         String taskId = getIntent().getStringExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID);
+
+
         setToolbarTitle(taskId);
 
         if (addEditTaskFragment == null) {
@@ -50,7 +54,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
         }
 
 
-        mPresenter = new AddEditTaskPresenter(taskId, Injection.provideTasksRepository(getApplicationContext()), addEditTaskFragment, true);
+        mPresenter = new AddEditTaskPresenter(taskId, Injection.provideTasksRepository(getApplicationContext()), addEditTaskFragment, false);
 
     }
 

@@ -1,11 +1,10 @@
 package com.example.priority.taskdetails;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import android.os.Bundle;
-import android.util.Log;
 
 import com.example.priority.Injection;
 import com.example.priority.R;

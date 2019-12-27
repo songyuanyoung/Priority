@@ -28,21 +28,23 @@ public class TaskDetailPresenter implements TasksDetailsContract.Presenter {
 
     @Override
     public void editTask() {
+        mView.showEditTask(mTaskId);
 
     }
 
     @Override
     public void deleteTask() {
-
+        mTasksRepository.deleteTask(mTaskId);
     }
 
     @Override
     public void completeTask() {
-
+        mTasksRepository.completeTask(mTaskId);
     }
 
     @Override
     public void activatTask() {
+        mTasksRepository.activateTask(mTaskId);
 
     }
 

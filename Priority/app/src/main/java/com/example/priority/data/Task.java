@@ -97,7 +97,10 @@ public final class Task {
     @Override
     public String toString() {
         return "Task{" +
-                "mTitle='" + mTitle + '\'' +
+                "mId='" + mId + '\'' +
+                ", mTitle='" + mTitle + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mCompleted=" + mCompleted +
                 '}';
     }
 }

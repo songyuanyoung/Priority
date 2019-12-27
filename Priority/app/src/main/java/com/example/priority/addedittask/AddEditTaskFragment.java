@@ -92,17 +92,17 @@ public class AddEditTaskFragment extends Fragment implements AddEditTaskContract
 
     @Override
     public void setTitle(String title) {
-
+        mTitle.setText(title);
     }
 
     @Override
     public void setDescription(String description) {
-
+        mDescription.setText(description);
     }
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
 
     @Override

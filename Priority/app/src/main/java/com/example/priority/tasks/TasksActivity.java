@@ -1,5 +1,9 @@
 package com.example.priority.tasks;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,21 +11,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-
-
 import com.example.priority.Injection;
 import com.example.priority.R;
-import com.example.priority.data.Task;
-import com.example.priority.data.TasksDataSource;
 import com.example.priority.statistics.StatisticsActivity;
 import com.example.priority.utils.ActivityUtils;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.List;
 
 import timber.log.Timber;
 

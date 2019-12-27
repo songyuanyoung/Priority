@@ -84,22 +84,23 @@ public class TasksRepository implements TasksDataSource {
 
     @Override
     public void completeTask(@NonNull Task task) {
-        mTasksRemoteDataSource.completeTask(task);
+        mTasksLocalDataSource.completeTask(task);
+
     }
 
     @Override
     public void completeTask(@NonNull String taskId) {
-
+        mTasksLocalDataSource.completeTask(taskId);
     }
 
     @Override
     public void activateTask(@NonNull Task task) {
-
+        mTasksLocalDataSource.activateTask(task);
     }
 
     @Override
     public void activateTask(@NonNull String taskId) {
-
+        mTasksLocalDataSource.activateTask(taskId);
     }
 
     @Override
@@ -119,6 +120,6 @@ public class TasksRepository implements TasksDataSource {
 
     @Override
     public void deleteTask(@NonNull String taskId) {
-
+        mTasksLocalDataSource.deleteTask(taskId);
     }
 }

@@ -1,7 +1,6 @@
+package com.example.priority;
 
 import android.app.Application;
-
-import com.example.priority.BuildConfig;
 
 import timber.log.Timber;
 
