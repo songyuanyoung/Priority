@@ -3,6 +3,7 @@ package com.example.priority.tasks;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -16,8 +17,6 @@ import com.example.priority.R;
 import com.example.priority.statistics.StatisticsActivity;
 import com.example.priority.utils.ActivityUtils;
 import com.google.android.material.navigation.NavigationView;
-
-import timber.log.Timber;
 
 public class TasksActivity extends AppCompatActivity {
 
@@ -41,6 +40,7 @@ public class TasksActivity extends AppCompatActivity {
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setStatusBarBackground(R.color.colorAccent);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {

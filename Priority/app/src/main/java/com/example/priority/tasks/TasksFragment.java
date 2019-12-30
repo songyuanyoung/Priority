@@ -7,13 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.priority.R;
 import com.example.priority.addedittask.AddEditTaskActivity;
 import com.example.priority.data.Task;
+import com.example.priority.databinding.FragmentTasksBinding;
 import com.example.priority.taskdetails.TaskDetailsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -33,6 +35,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class TasksFragment extends Fragment implements TasksContract.View {
 
     private final static String TAG = TasksFragment.class.getSimpleName();
+
+    private FragmentTasksBinding mFragmentTasksBinding;
 
     private TasksAdapter mListAdapter;
 
@@ -61,10 +65,14 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_tasks, container, false);
 
-        ListView listView = root.findViewById(R.id.tasks_list);
+        mFragmentTasksBinding = FragmentTasksBinding.inflate(inflater, container, false);
+
+        //View root = inflater.inflate(R.layout.fragment_tasks, container, false);
+
+        RecyclerView listView = mFragmentTasksBinding.tasksList;
         listView.setAdapter(mListAdapter);
+        listView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
 
@@ -76,8 +84,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
             }
         });
 
-
-        return root;
+        return mFragmentTasksBinding.getRoot();
     }
 
     @Override

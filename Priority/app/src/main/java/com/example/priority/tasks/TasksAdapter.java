@@ -1,20 +1,27 @@
 package com.example.priority.tasks;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.priority.R;
 import com.example.priority.data.Task;
 
 import java.util.List;
+
+import timber.log.Timber;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
-public class TasksAdapter extends BaseAdapter {
+public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
 
     private List<Task> mTasks;
     private TaskItemListener mTaskItemListener;
@@ -33,46 +40,28 @@ public class TasksAdapter extends BaseAdapter {
         mTasks = checkNotNull(tasks);
     }
 
+
+    @NonNull
     @Override
-    public int getCount() {
-        return mTasks.size();
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
+
+        return new ViewHolder(view);
     }
 
     @Override
-    public Task getItem(int position) {
-        return mTasks.get(position);
-    }
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+        final Task task = mTasks.get(position);
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View rowView = view;
+        Timber.d(task.getTitle() + ":title");
 
-        if (rowView == null) {
-            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-            rowView = inflater.inflate(R.layout.task_item, viewGroup, false);
-        }
 
-        final Task task = getItem(i);
+        holder.mCompleteCheckBox.setChecked(task.isCompleted());
+        holder.mTitleTextView.setText(task.getTitle());
 
-        TextView titleTV = (TextView) rowView.findViewById(R.id.title);
-        titleTV.setText(task.getTitle());
-
-        CheckBox checkBox = (CheckBox) rowView.findViewById(R.id.complete);
-        checkBox.setChecked(task.isCompleted());
-
-        if (task.isCompleted()) {
-            rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.list_completed_touch_feedback));
-        } else {
-            rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.touch_feedback));
-
-        }
-
-        checkBox.setOnClickListener(new View.OnClickListener() {
+        holder.mCompleteCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!task.isCompleted()) {
@@ -83,14 +72,40 @@ public class TasksAdapter extends BaseAdapter {
             }
         });
 
-        rowView.setOnClickListener(new View.OnClickListener() {
+        holder.mTaskItemLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mTaskItemListener.onTaskClick(task);
             }
         });
 
+    }
 
-        return rowView;
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mTasks.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView mTitleTextView;
+        private CheckBox mCompleteCheckBox;
+
+        private LinearLayout mTaskItemLinearLayout;
+
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            mTaskItemLinearLayout = itemView.findViewById(R.id.task_item_layout);
+            mTitleTextView = itemView.findViewById(R.id.title);
+            mCompleteCheckBox = itemView.findViewById(R.id.complete);
+
+        }
     }
 }

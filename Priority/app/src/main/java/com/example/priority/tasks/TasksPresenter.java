@@ -1,7 +1,5 @@
 package com.example.priority.tasks;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.priority.data.Task;
@@ -69,7 +67,6 @@ public class TasksPresenter implements TasksContract.Presenter {
             mTasksView.showNoTasks();
         } else {
 
-            Log.d(TAG, tasks.size() + ":size");
             mTasksView.showTasks(tasks);
         }
     }
