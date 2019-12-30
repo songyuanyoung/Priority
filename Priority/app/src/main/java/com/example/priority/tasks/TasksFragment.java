@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.priority.R;
 import com.example.priority.addedittask.AddEditTaskActivity;
@@ -32,7 +30,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Use the {@link TasksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TasksFragment extends Fragment implements TasksContract.View {
+public class TasksFragment extends Fragment implements TasksContract.View, TaskItemListener {
 
     private final static String TAG = TasksFragment.class.getSimpleName();
 
@@ -57,7 +55,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mListAdapter = new TasksAdapter(new ArrayList<Task>(0), mTaskItemListener);
+        mListAdapter = new TasksAdapter(new ArrayList<Task>(0), this);
 
     }
 
@@ -67,7 +65,6 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         // Inflate the layout for this fragment
 
         mFragmentTasksBinding = FragmentTasksBinding.inflate(inflater, container, false);
-
 
         mFragmentTasksBinding.setAdapter(mListAdapter);
 
@@ -90,22 +87,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         mTasksPresenter.start();
     }
 
-    TaskItemListener mTaskItemListener = new TaskItemListener() {
-        @Override
-        public void onTaskClick(Task clickedTask) {
-            mTasksPresenter.openTaskDetails(clickedTask);
-        }
 
-        @Override
-        public void onCompleteTaskClick(Task completedTask) {
-            mTasksPresenter.completeTask(completedTask);
-        }
-
-        @Override
-        public void onActivateTaskClick(Task activatedTask) {
-            mTasksPresenter.activateTask(activatedTask);
-        }
-    };
 
     @Override
     public void setLoadingIndicator(boolean active) {
@@ -126,7 +108,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
     @Override
     public void showTaskDetailsUi(String taskId) {
-        Log.d(TAG, "taskId:" + taskId);
+
         Intent intent = new Intent(getActivity(), TaskDetailsActivity.class);
         intent.putExtra(TaskDetailsActivity.EXTRA_TASK_ID, taskId);
         startActivity(intent);
@@ -205,4 +187,23 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     private void showMessage(String message) {
         Snackbar.make(getView(), message, Snackbar.LENGTH_LONG).show();
     }
+
+    @Override
+    public void onTaskClick(Task clickedTask) {
+        mTasksPresenter.openTaskDetails(clickedTask);
+    }
+
+    @Override
+    public void onCompleteTaskClick(Task completedTask) {
+        mTasksPresenter.completeTask(completedTask);
+
+    }
+
+    @Override
+    public void onActivateTaskClick(Task activatedTask) {
+        mTasksPresenter.activateTask(activatedTask);
+
+    }
+
+
 }
