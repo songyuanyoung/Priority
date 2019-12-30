@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/task_item_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/touch_feedback"
-    android:paddingStart="@dimen/activity_vertical_margin"
-    android:paddingEnd="@dimen/activity_vertical_margin"
-    android:paddingTop="@dimen/list_item_padding"
-    android:paddingBottom="@dimen/list_item_padding">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBox
-        android:id="@+id/complete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
+    <data>
 
-    <TextView
-        android:id="@+id/title"
+        <variable
+            name="task"
+            type="com.example.priority.data.Task" />
+
+        <variable
+            name="listener"
+            type="com.example.priority.tasks.TaskItemListener" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/task_item_layout"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/activity_vertical_margin"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+        android:background="@drawable/touch_feedback"
+        android:paddingStart="@dimen/activity_vertical_margin"
+        android:paddingEnd="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/list_item_padding"
+        android:paddingBottom="@dimen/list_item_padding"
+        android:onClick="@{() -> listener.onTaskClick(task)}">
 
-</LinearLayout>
+        <CheckBox
+            android:id="@+id/complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:checked="@{task.completed}" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@{task.title}"/>
+
+    </LinearLayout>
+</layout>

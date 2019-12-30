@@ -68,11 +68,8 @@ public class TasksFragment extends Fragment implements TasksContract.View {
 
         mFragmentTasksBinding = FragmentTasksBinding.inflate(inflater, container, false);
 
-        //View root = inflater.inflate(R.layout.fragment_tasks, container, false);
 
-        RecyclerView listView = mFragmentTasksBinding.tasksList;
-        listView.setAdapter(mListAdapter);
-        listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mFragmentTasksBinding.setAdapter(mListAdapter);
 
         FloatingActionButton fab = getActivity().findViewById(R.id.fab_add_task);
 

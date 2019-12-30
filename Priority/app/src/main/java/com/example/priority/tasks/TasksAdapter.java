@@ -1,18 +1,15 @@
 package com.example.priority.tasks;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.priority.R;
 import com.example.priority.data.Task;
+import com.example.priority.databinding.TaskItemBinding;
 
 import java.util.List;
 
@@ -21,7 +18,7 @@ import timber.log.Timber;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
-public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
+public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> implements TaskItemListener {
 
     private List<Task> mTasks;
     private TaskItemListener mTaskItemListener;
@@ -47,7 +44,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
 
-        return new ViewHolder(view);
+        TaskItemBinding taskItemBinding = TaskItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+
+        return new ViewHolder(taskItemBinding);
     }
 
     @Override
@@ -56,28 +55,9 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         final Task task = mTasks.get(position);
 
         Timber.d(task.getTitle() + ":title");
+        holder.bind(task);
+        holder.mViewDataBinding.setListener(this);
 
-
-        holder.mCompleteCheckBox.setChecked(task.isCompleted());
-        holder.mTitleTextView.setText(task.getTitle());
-
-        holder.mCompleteCheckBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!task.isCompleted()) {
-                    mTaskItemListener.onCompleteTaskClick(task);
-                } else {
-                    mTaskItemListener.onActivateTaskClick(task);
-                }
-            }
-        });
-
-        holder.mTaskItemLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTaskItemListener.onTaskClick(task);
-            }
-        });
 
     }
 
@@ -91,21 +71,31 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         return mTasks.size();
     }
 
+    @Override
+    public void onTaskClick(Task clickedTask) {
+        mTaskItemListener.onTaskClick(clickedTask);
+    }
+
+    @Override
+    public void onCompleteTaskClick(Task completedTask) {
+
+    }
+
+    @Override
+    public void onActivateTaskClick(Task activatedTask) {
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTitleTextView;
-        private CheckBox mCompleteCheckBox;
+        TaskItemBinding mViewDataBinding;
+        public ViewHolder(TaskItemBinding taskItemBinding) {
+            super(taskItemBinding.getRoot());
+            this.mViewDataBinding = taskItemBinding;
+        }
 
-        private LinearLayout mTaskItemLinearLayout;
-
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            mTaskItemLinearLayout = itemView.findViewById(R.id.task_item_layout);
-            mTitleTextView = itemView.findViewById(R.id.title);
-            mCompleteCheckBox = itemView.findViewById(R.id.complete);
-
+        public void bind(Task task) {
+            mViewDataBinding.setTask(task);
         }
     }
 }
