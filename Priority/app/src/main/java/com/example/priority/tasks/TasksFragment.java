@@ -130,7 +130,7 @@ public class TasksFragment extends Fragment implements TasksContract.View, TaskI
     }
 
     @Override
-    public void showLoadinhTasksError() {
+    public void showLoadingTasksError() {
 
     }
 

@@ -26,7 +26,7 @@ public class TasksContract {
 
         void showCompletedTasksCleared();
 
-        void showLoadinhTasksError();
+        void showLoadingTasksError();
 
         void showNoTasks();
 

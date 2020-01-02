@@ -13,8 +13,6 @@ import com.example.priority.databinding.TaskItemBinding;
 
 import java.util.List;
 
-import timber.log.Timber;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 
@@ -54,7 +52,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
         final Task task = mTasks.get(position);
 
-        Timber.d(task.getTitle() + ":title");
         holder.bind(task);
         holder.mViewDataBinding.setListener(this);
 
