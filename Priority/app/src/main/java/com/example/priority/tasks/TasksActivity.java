@@ -19,6 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import timber.log.Timber;
 
+
 public class TasksActivity extends AppCompatActivity {
 
     String TAG = TasksActivity.class.getSimpleName();
